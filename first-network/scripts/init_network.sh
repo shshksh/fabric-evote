@@ -52,3 +52,9 @@ udpateAnchorPeer CollegeChannel CollegeITMSPanchors.tx OrgITMSP
 udpateAnchorPeer CollegeChannel CollegeCEMSPanchors.tx OrgCEMSP
 udpateAnchorPeer CollegeChannel CollegeKORMSPanchors.tx OrgKORMSP
 udpateAnchorPeer CollegeChannel CollegeENGMSPanchors.tx OrgENGMSP
+
+docker-compose -f docker-compose-cli.yaml up -d
+
+docker ps -a
+
+docker exec cli scripts/test_it_org.sh
