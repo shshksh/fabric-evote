@@ -1,60 +1,92 @@
 #!/bin/bash
 
-export CHANNEL_NAME=itchannel
+function setEnv() {
+    if [ $1 == "itcae" ]; then
+        export CORE_PEER_LOCALMSPID="OrgITMSP"
+        PORT=7051
+    elif [ $1 == "ce" ]; then
+        export CORE_PEER_LOCALMSPID="OrgCEMSP"
+        PORT=9051
+    elif [ $1 == "kor" ]; then
+        export CORE_PEER_LOCALMSPID="OrgKORMSP"
+        PORT=11051
+    elif [ $1 == "eng" ]; then
+        export CORE_PEER_LOCALMSPID="OrgENGMSP"
+        PORT=13051
+    else
+        echo "Invalid org"
+    fi
+
+    export CORE_PEER_TLS_ROOTCERT_FILE=$(find "`pwd`" -name ca.crt | grep "peer0.$1")
+    export CORE_PEER_MSPCONFIGPATH=$(find "`pwd`" -name msp | grep "Admin@itcae")
+    export CORE_PEER_ADDRESS=peer0.$1.evote.com:$PORT
+}
+
+function createChannel() {
+    export CHANNEL_NAME=$1
+    setEnv $2
+
+    peer channel create -o orderer.evote.com:7050 \
+    -c $CHANNEL_NAME \
+    -f ./channel-artifacts/itchannel.tx \
+    --tls true \
+    --cafile $(find "`pwd`" -name tlsca.evote.com-cert.pem | grep "orderer.evote.com")
+}
+
+function joinTo() {
+    export CHANNEL_NAME=$1
+    setEnv $2
+
+    peer channel join -b $CHANNEL_NAME.block
+}
+
+function updateAnchor() {
+    export CHANNEL_NAME=$1
+    setEnv $2
+
+    peer channel update -o orderer.evote.com:7050 \
+    -c $CHANNEL_NAME \
+    -f ./channel-artifacts/$3.tx \
+    --tls \
+    --cafile $(find "`pwd`" -name tlsca.evote.com-cert.pem | grep "orderer.evote.com")
+}
+
+function installChaincode() {
+    export CHANNEL_NAME=$1
+    setEnv $2
+
+    peer chaincode install -n $3 -v 1.0 -p github.com/chaincode/fabcar/go/
+}
+
+function instantiateChaincode() {
+    export CHANNEL_NAME=$1
+
+    peer chaincode instantiate -o orderer.evote.com:7050 \
+    --tls \
+    --cafile $(find "`pwd`" -name tlsca.evote.com-cert.pem | grep "orderer.evote.com") \
+    -C $CHANNEL_NAME \
+    -n $2 \
+    -v 1.0 \
+    -c '{"Args":[]}' \
+    -P "$3"
+}
 
 echo "start channel creating process"
-CORE_PEER_LOCALMSPID="OrgITMSP"
-CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/itcae.evote.com/peers/peer0.itcae.evote.com/tls/ca.crt
-CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/itcae.evote.com/users/Admin@itcae.evote.com/msp
-CORE_PEER_ADDRESS=peer0.itcae.evote.com:7051
-
-peer channel create -o orderer.evote.com:7050 \
--c $CHANNEL_NAME \
--f ./channel-artifacts/itchannel.tx \
---tls true \
---cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/evote.com/orderers/orderer.evote.com/msp/tlscacerts/tlsca.evote.com-cert.pem
+createChannel itchannel itcae
 
 # join to channel
 echo "start join to channel"
-peer channel join -b itchannel.block
-echo "OrgIT joined to $CHANNEL_NAME"
+joinTo itchannel itcae
 
 # update anchor peer
-CORE_PEER_LOCALMSPID="OrgITMSP"
-CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/itcae.evote.com/peers/peer0.itcae.evote.com/tls/ca.crt
-CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/itcae.evote.com/users/Admin@itcae.evote.com/msp
-CORE_PEER_ADDRESS=peer0.itcae.evote.com:7051
-
-peer channel update -o orderer.evote.com:7050 \
--c $CHANNEL_NAME \
--f ./channel-artifacts/OrgITMSPanchors.tx \
---tls \
---cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/evote.com/orderers/orderer.evote.com/msp/tlscacerts/tlsca.evote.com-cert.pem
-
-echo "OrgITMSP anchor updated"
+updateAnchor itchannel itcae OrgITMSPanchors
 
 # install chaincode
 echo "start install chaincode"
-
-CORE_PEER_LOCALMSPID="OrgITMSP"
-CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/itcae.evote.com/peers/peer0.itcae.evote.com/tls/ca.crt
-CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/itcae.evote.com/users/Admin@itcae.evote.com/msp
-CORE_PEER_ADDRESS=peer0.itcae.evote.com:7051
-
-peer chaincode install -n itcc -v 1.0 -p github.com/chaincode/fabcar/go/
-
-echo "chaincode installed"
+installChaincode itchannel itcae itcc
 
 # instantiate
 echo "start chaincode instantiate"
+instantiateChaincode itchannel itcc "AND ('OrgITMSP.peer')"
 
-peer chaincode instantiate -o orderer.evote.com:7050 \
---tls \
---cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/evote.com/orderers/orderer.evote.com/msp/tlscacerts/tlsca.evote.com-cert.pem \
--C $CHANNEL_NAME \
--n itcc \
--v 1.0 \
--c '{"Args":[]}' \
--P "AND ('OrgITMSP.peer')"
-
-echo "success"
+echo "end"
