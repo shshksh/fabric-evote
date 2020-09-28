@@ -1,8 +1,11 @@
 package main
 
 import (
+	"bufio"
 	"encoding/json"
 	"fmt"
+	"os"
+	"strings"
 )
 
 // SimpleChaincode example simple Chaincode implementation
@@ -29,19 +32,84 @@ type Vote struct {
 	Records    []Record    `json:"records"`
 }
 
+var repository map[string]Vote = make(map[string]Vote)
+
+// Invoke route function
+func (t *SimpleChaincode) Invoke(args []string) {
+	function := args[0]
+	if function == "create" {
+		t.createVote(args[1:])
+	} else if function == "enroll" {
+		t.enroll(args[1:])
+	} else if function == "vote" {
+		t.vote(args[1:])
+	} else if function == "query" {
+		t.query(args[1:])
+	}
+}
+
+// createVote put empty vote data into state with key for given parameter.
+func (t *SimpleChaincode) createVote(args []string) {
+	if len(args) != 1 {
+		fmt.Println("Incorrect number of arguments. Expecting 1.")
+	}
+	vote := Vote{[]Candidate{}, []Record{}}
+
+	voteAsBytes, _ := json.MarshalIndent(vote, "", "  ")
+	repository[args[0]] = vote
+
+	fmt.Println(string(voteAsBytes))
+}
+
+// candidate registration
+func (t *SimpleChaincode) enroll(args []string) {
+	if len(args) != 5 {
+		fmt.Println("Incorrect number of arguments. Expecting 5.")
+	}
+	target, ok := repository[args[0]]
+	if !ok {
+		return
+	}
+	cand := Candidate{Name: args[1], Major: args[2], SID: args[3], College: args[4]}
+	repository[args[0]] = Vote{append(target.Candidates, cand), target.Records}
+}
+
+// vote makes payment of X units from A to B
+func (t *SimpleChaincode) vote(args []string) {
+	if len(args) != 3 {
+		fmt.Println("Incorrect number of arguments. Expecting 3.")
+	}
+	target, ok := repository[args[0]]
+	if !ok {
+		return
+	}
+	record := Record{From: args[1], To: args[2]}
+	repository[args[0]] = Vote{target.Candidates, append(target.Records, record)}
+}
+
+// query callback representing the query of a chaincode
+func (t *SimpleChaincode) query(args []string) {
+	if len(args) != 1 {
+		fmt.Println("Incorrect number of arguments. Expecting 1.")
+	}
+	result, ok := repository[args[0]]
+	if ok {
+		out, _ := json.MarshalIndent(result, "", "  ")
+		fmt.Println(string(out))
+	} else {
+		fmt.Println("not exist.")
+	}
+}
+
 func main() {
-	cand1 := Candidate{Name: "sh", Major: "IT", SID: "201611998", College: "coe"}
-	cand2 := Candidate{Name: "qwerty", Major: "IT", SID: "201611944", College: "coe"}
+	test := SimpleChaincode{}
+	for {
+		fmt.Print("$: ")
+		in := bufio.NewReader(os.Stdin)
+		command, _ := in.ReadString('\n')
+		command = command[:len(command)-1]
 
-	var cands []Candidate
-	cands = append(cands, cand1)
-	cands = append(cands, cand2)
-
-	records := []Record{}
-
-	vote1 := Vote{cands, records}
-
-	marshal, _ := json.MarshalIndent(vote1, "", "  ")
-
-	fmt.Println(string(marshal))
+		args := strings.Split(command, " ")
+		test.Invoke(args)
+	}
 }
