@@ -52,7 +52,14 @@ func (t *SimpleChaincode) Invoke(args []string) {
 func (t *SimpleChaincode) createVote(args []string) {
 	if len(args) != 1 {
 		fmt.Println("Incorrect number of arguments. Expecting 1.")
+		return
 	}
+	_, ok := repository[args[0]]
+	if ok {
+		fmt.Println("Duplicated vote.")
+		return
+	}
+
 	vote := Vote{[]Candidate{}, []Record{}}
 
 	voteAsBytes, _ := json.MarshalIndent(vote, "", "  ")
@@ -65,11 +72,20 @@ func (t *SimpleChaincode) createVote(args []string) {
 func (t *SimpleChaincode) enroll(args []string) {
 	if len(args) != 5 {
 		fmt.Println("Incorrect number of arguments. Expecting 5.")
+		return
 	}
 	target, ok := repository[args[0]]
+
 	if !ok {
 		return
 	}
+	for _, cand := range target.Candidates {
+		if cand.SID == args[3] {
+			fmt.Println("Duplicated SID.")
+			return
+		}
+	}
+
 	cand := Candidate{Name: args[1], Major: args[2], SID: args[3], College: args[4]}
 	repository[args[0]] = Vote{append(target.Candidates, cand), target.Records}
 }
@@ -78,19 +94,27 @@ func (t *SimpleChaincode) enroll(args []string) {
 func (t *SimpleChaincode) vote(args []string) {
 	if len(args) != 3 {
 		fmt.Println("Incorrect number of arguments. Expecting 3.")
+		return
 	}
 	target, ok := repository[args[0]]
 	if !ok {
 		return
 	}
-	record := Record{From: args[1], To: args[2]}
-	repository[args[0]] = Vote{target.Candidates, append(target.Records, record)}
+	for _, cand := range target.Candidates {
+		if cand.SID == args[2] {
+			record := Record{From: args[1], To: args[2]}
+			repository[args[0]] = Vote{target.Candidates, append(target.Records, record)}
+			return
+		}
+	}
+	fmt.Println("Not exist such candidate SID.")
 }
 
 // query callback representing the query of a chaincode
 func (t *SimpleChaincode) query(args []string) {
 	if len(args) != 1 {
 		fmt.Println("Incorrect number of arguments. Expecting 1.")
+		return
 	}
 	result, ok := repository[args[0]]
 	if ok {
