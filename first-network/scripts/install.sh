@@ -62,7 +62,7 @@ function installChaincode() {
     export CHANNEL_NAME=$1
     setEnv $2
 
-    peer chaincode install -n $3 -v 1.0 -p github.com/chaincode/fabcar/go/
+    peer chaincode install -n $3 -v 1.0 -p github.com/chaincode/evote/go/
 }
 
 function instantiateChaincode() {
