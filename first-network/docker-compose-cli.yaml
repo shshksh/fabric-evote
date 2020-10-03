@@ -7,6 +7,10 @@ version: '2'
 
 volumes:
   orderer.evote.com:
+  couchdb0:
+  couchdb1:
+  couchdb2:
+  couchdb3:
   peer0.itcae.evote.com:
   peer0.ce.evote.com:
   peer0.kor.evote.com:
@@ -25,11 +29,63 @@ services:
     networks:
       - byfn
 
+  couchdb0:
+    container_name: couchdb0
+    image: hyperledger/fabric-couchdb
+    environment: 
+      - COUCHDB_USER=
+      - COUCHDB_PASSWORD=
+    ports:
+      - 5984:5984
+    networks:
+      - byfn
+
+  couchdb1:
+    container_name: couchdb1
+    image: hyperledger/fabric-couchdb
+    environment: 
+      - COUCHDB_USER=
+      - COUCHDB_PASSWORD=
+    ports:
+      - 6984:6984
+    networks:
+      - byfn
+
+  couchdb2:
+    container_name: couchdb2
+    image: hyperledger/fabric-couchdb
+    environment: 
+      - COUCHDB_USER=
+      - COUCHDB_PASSWORD=
+    ports:
+      - 7984:7984
+    networks:
+      - byfn
+
+  couchdb3:
+    container_name: couchdb3
+    image: hyperledger/fabric-couchdb
+    environment: 
+      - COUCHDB_USER=
+      - COUCHDB_PASSWORD=
+    ports:
+      - 8984:8984
+    networks:
+      - byfn
+
   peer0.itcae.evote.com:
     container_name: peer0.itcae.evote.com
     extends:
       file:  base/docker-compose-base.yaml
       service: peer0.itcae.evote.com
+    environment: 
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb0:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
+    depends_on: 
+      - orderer.evote.com
+      - couchdb0
     networks:
       - byfn
 
@@ -38,6 +94,14 @@ services:
     extends:
       file:  base/docker-compose-base.yaml
       service: peer0.ce.evote.com
+    environment: 
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb1:6984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
+    depends_on: 
+      - orderer.evote.com
+      - couchdb1  
     networks:
       - byfn
 
@@ -46,6 +110,14 @@ services:
     extends:
       file:  base/docker-compose-base.yaml
       service: peer0.kor.evote.com
+    environment: 
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb2:7984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
+    depends_on: 
+      - orderer.evote.com
+      - couchdb2
     networks:
       - byfn
 
@@ -54,6 +126,14 @@ services:
     extends:
       file:  base/docker-compose-base.yaml
       service: peer0.eng.evote.com
+    environment: 
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb3:8984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
+    depends_on: 
+      - orderer.evote.com
+      - couchdb3
     networks:
       - byfn
 
@@ -86,6 +166,10 @@ services:
         - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
     depends_on:
       - orderer.evote.com
+      - couchdb0
+      - couchdb1
+      - couchdb2
+      - couchdb3
       - peer0.itcae.evote.com
       - peer0.ce.evote.com
       - peer0.kor.evote.com
