@@ -71,10 +71,12 @@ function instantiateChaincode() {
     -P "$3"
 }
 
+sleep 3
 echo "start channel creating process"
 createChannel itchannel itcae
 
 # join to channel
+sleep 3
 echo "start join to channel"
 joinTo itchannel itcae
 
