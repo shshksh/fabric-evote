@@ -91,6 +91,7 @@ createChannel chsschannel kor
 createChannel collegechannel itcae
 
 # join to channel
+sleep 3
 echo "start join to channel"
 joinTo itchannel itcae
 joinTo cechannel ce
@@ -143,14 +144,14 @@ installChaincode collegechannel eng collegecc
 
 # instantiate
 echo "start chaincode instantiate"
-instantiateChaincode itchannel itcae itcc "AND ('OrgITMSP.peer')"
-instantiateChaincode cechannel ce cecc "AND ('OrgCEMSP.peer')"
-instantiateChaincode korchannel kor korcc "AND ('OrgKORMSP.peer')"
-instantiateChaincode engchannel eng engcc "AND ('OrgENGMSP.peer')"
+# instantiateChaincode itchannel itcae itcc "AND ('OrgITMSP.peer')"
+# instantiateChaincode cechannel ce cecc "AND ('OrgCEMSP.peer')"
+# instantiateChaincode korchannel kor korcc "AND ('OrgKORMSP.peer')"
+# instantiateChaincode engchannel eng engcc "AND ('OrgENGMSP.peer')"
 
-instantiateChaincode coechannel itcae coecc "AND ('OrgITMSP.peer','OrgCEMSP.peer')"
-instantiateChaincode chsschannel kor chsscc "AND ('OrgKORMSP.peer','OrgENGMSP.peer')"
+# instantiateChaincode coechannel itcae coecc "AND ('OrgITMSP.peer','OrgCEMSP.peer')"
+# instantiateChaincode chsschannel kor chsscc "AND ('OrgKORMSP.peer','OrgENGMSP.peer')"
 
-instantiateChaincode collegechannel itcae collegecc "AND ('OrgITMSP.peer','OrgCEMSP.peer','OrgKORMSP.peer','OrgENGMSP.peer')"
+# instantiateChaincode collegechannel itcae collegecc "AND ('OrgITMSP.peer','OrgCEMSP.peer','OrgKORMSP.peer','OrgENGMSP.peer')"
 
 echo "end"

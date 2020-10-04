@@ -62,6 +62,8 @@ docker-compose -f docker-compose-cli.yaml up -d
 
 docker ps -a
 
-docker exec cli scripts/test_it_org.sh
-# docker exec cli scripts/install.sh
+sleep 5
+
+# docker exec cli scripts/test_it_org.sh
+docker exec cli scripts/install.sh
 
