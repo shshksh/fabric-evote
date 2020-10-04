@@ -65,5 +65,5 @@ docker ps -a
 sleep 5
 
 # docker exec cli scripts/test_it_org.sh
-docker exec cli scripts/install.sh
+docker exec cli scripts/install_uni.sh
 
