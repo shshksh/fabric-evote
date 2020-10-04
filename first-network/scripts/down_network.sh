@@ -1,3 +1,11 @@
 docker-compose -f docker-compose-cli.yaml down --volumes --remove-orphans
-./byfn.sh down
+
+docker run -v $PWD:/tmp/first-network --rm hyperledger/fabric-tools:$IMAGETAG rm -Rf /tmp/first-network/ledgers-backup
+
+docker rm -f $(docker ps -aq)
+
+docker rmi -f $(docker images dev-* -q)
+
+rm -rf channel-artifacts/*.block channel-artifacts/*.tx crypto-config
+
 docker ps -a

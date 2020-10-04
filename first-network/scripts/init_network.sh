@@ -53,6 +53,11 @@ udpateAnchorPeer CollegeChannel CollegeCEMSPanchors.tx OrgCEMSP
 udpateAnchorPeer CollegeChannel CollegeKORMSPanchors.tx OrgKORMSP
 udpateAnchorPeer CollegeChannel CollegeENGMSPanchors.tx OrgENGMSP
 
+export EVOTE_CA0_PRIVATE_KEY=$(cd crypto-config/peerOrganizations/itcae.evote.com/ca && ls *_sk)
+export EVOTE_CA1_PRIVATE_KEY=$(cd crypto-config/peerOrganizations/ce.evote.com/ca && ls *_sk)
+export EVOTE_CA2_PRIVATE_KEY=$(cd crypto-config/peerOrganizations/kor.evote.com/ca && ls *_sk)
+export EVOTE_CA3_PRIVATE_KEY=$(cd crypto-config/peerOrganizations/eng.evote.com/ca && ls *_sk)
+
 docker-compose -f docker-compose-cli.yaml up -d
 
 docker ps -a
