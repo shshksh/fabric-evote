@@ -1,0 +1,45 @@
+{
+  "name": "first-network",
+  "version": "1.0.0",
+  "client": {
+    "organization": "OrgIT",
+    "connection": {
+      "timeout": {
+        "peer": {
+          "endorser": "300"
+        }
+      }
+    }
+  },
+  "organizations": {
+    "OrgIT": {
+      "mspid": "OrgITMSP",
+      "peers": ["peer0.itcae.evote.com"],
+      "certificateAuthorities": ["ca.itcae.evote.com"]
+    }
+  },
+  "peers": {
+    "peer0.itcae.evote.com": {
+      "url": "grpcs://localhost:7051",
+      "tlsCACerts": {
+        "path": "../../first-network/crypto-config/peerOrganizations/itcae.evote.com/msp/tlscacerts/tlsca.itcae.evote.com-cert.pem"
+      },
+      "grpcOptions": {
+        "ssl-target-name-override": "peer0.itcae.evote.com",
+        "hostnameOverride": "peer0.itcae.evote.com"
+      }
+    }
+  },
+  "certificateAuthorities": {
+    "ca.itcae.evote.com": {
+      "url": "https://localhost:7054",
+      "caName": "ca.itcae.evote.com",
+      "tlsCACerts": {
+        "pem": "../../first-network/crypto-config/peerOrganizations/itcae.evote.com/ca/ca.itcae.evote.com-cert.pem"
+      },
+      "httpOptions": {
+        "verify": false
+      }
+    }
+  }
+}
