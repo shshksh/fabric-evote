@@ -91,6 +91,7 @@ createChannel chsschannel kor
 createChannel collegechannel itcae
 
 # join to channel
+sleep 3
 echo "start join to channel"
 joinTo itchannel itcae
 joinTo cechannel ce

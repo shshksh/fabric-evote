@@ -34,6 +34,10 @@ services:
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.itcae.evote.com:7051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.itcae.evote.com:7051
       - CORE_PEER_LOCALMSPID=OrgITMSP
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb0:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
     volumes:
         - /var/run/:/host/var/run/
         - ../crypto-config/peerOrganizations/itcae.evote.com/peers/peer0.itcae.evote.com/msp:/etc/hyperledger/fabric/msp
@@ -57,6 +61,10 @@ services:
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.ce.evote.com:9051
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.ce.evote.com:9051
       - CORE_PEER_LOCALMSPID=OrgCEMSP
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb1:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
     volumes:
         - /var/run/:/host/var/run/
         - ../crypto-config/peerOrganizations/ce.evote.com/peers/peer0.ce.evote.com/msp:/etc/hyperledger/fabric/msp
@@ -81,6 +89,10 @@ services:
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.kor.evote.com:11051
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.kor.evote.com:11051
       - CORE_PEER_LOCALMSPID=OrgKORMSP
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb2:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
     volumes:
         - /var/run/:/host/var/run/
         - ../crypto-config/peerOrganizations/kor.evote.com/peers/peer0.kor.evote.com/msp:/etc/hyperledger/fabric/msp
@@ -104,6 +116,10 @@ services:
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.eng.evote.com:13051
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.eng.evote.com:13051
       - CORE_PEER_LOCALMSPID=OrgENGMSP
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb3:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
     volumes:
         - /var/run/:/host/var/run/
         - ../crypto-config/peerOrganizations/eng.evote.com/peers/peer0.eng.evote.com/msp:/etc/hyperledger/fabric/msp
