@@ -144,14 +144,14 @@ installChaincode collegechannel eng collegecc
 
 # instantiate
 echo "start chaincode instantiate"
-instantiateChaincode itchannel itcae itcc "AND ('OrgITMSP.peer')"
-instantiateChaincode cechannel ce cecc "AND ('OrgCEMSP.peer')"
-instantiateChaincode korchannel kor korcc "AND ('OrgKORMSP.peer')"
-instantiateChaincode engchannel eng engcc "AND ('OrgENGMSP.peer')"
+instantiateChaincode itchannel itcae itcc "OR ('OrgITMSP.peer')"
+instantiateChaincode cechannel ce cecc "OR ('OrgCEMSP.peer')"
+instantiateChaincode korchannel kor korcc "OR ('OrgKORMSP.peer')"
+instantiateChaincode engchannel eng engcc "OR ('OrgENGMSP.peer')"
 
-instantiateChaincode coechannel itcae coecc "AND ('OrgITMSP.peer','OrgCEMSP.peer')"
-instantiateChaincode chsschannel kor chsscc "AND ('OrgKORMSP.peer','OrgENGMSP.peer')"
+instantiateChaincode coechannel itcae coecc "OR ('OrgITMSP.peer','OrgCEMSP.peer')"
+instantiateChaincode chsschannel kor chsscc "OR ('OrgKORMSP.peer','OrgENGMSP.peer')"
 
-instantiateChaincode collegechannel itcae collegecc "AND ('OrgITMSP.peer','OrgCEMSP.peer','OrgKORMSP.peer','OrgENGMSP.peer')"
+instantiateChaincode collegechannel itcae collegecc "OR ('OrgITMSP.peer','OrgCEMSP.peer','OrgKORMSP.peer','OrgENGMSP.peer')"
 
 echo "end"

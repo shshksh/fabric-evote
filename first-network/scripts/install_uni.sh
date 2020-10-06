@@ -88,6 +88,6 @@ installChaincode itchannel itcae itcc
 
 # instantiate
 echo "start chaincode instantiate"
-instantiateChaincode itchannel itcc "AND ('OrgITMSP.peer')"
+instantiateChaincode itchannel itcc "OR ('OrgITMSP.peer')"
 
 echo "end"

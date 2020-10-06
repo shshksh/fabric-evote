@@ -1,0 +1,45 @@
+{
+  "name": "first-network",
+  "version": "1.0.0",
+  "client": {
+    "organization": "OrgKOR",
+    "connection": {
+      "timeout": {
+        "peer": {
+          "endorser": "300"
+        }
+      }
+    }
+  },
+  "organizations": {
+    "OrgKOR": {
+      "mspid": "OrgKORMSP",
+      "peers": ["peer0.kor.evote.com"],
+      "certificateAuthorities": ["ca.kor.evote.com"]
+    }
+  },
+  "peers": {
+    "peer0.kor.evote.com": {
+      "url": "grpcs://localhost:11051",
+      "tlsCACerts": {
+        "path": "../../first-network/crypto-config/peerOrganizations/kor.evote.com/msp/tlscacerts/tlsca.kor.evote.com-cert.pem"
+      },
+      "grpcOptions": {
+        "ssl-target-name-override": "peer0.kor.evote.com",
+        "hostnameOverride": "peer0.kor.evote.com"
+      }
+    }
+  },
+  "certificateAuthorities": {
+    "ca.kor.evote.com": {
+      "url": "https://localhost:11054",
+      "caName": "ca.kor.evote.com",
+      "tlsCACerts": {
+        "pem": "../../first-network/crypto-config/peerOrganizations/kor.evote.com/ca/ca.kor.evote.com-cert.pem"
+      },
+      "httpOptions": {
+        "verify": false
+      }
+    }
+  }
+}
