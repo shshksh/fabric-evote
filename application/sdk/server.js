@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 var path = require('path');
 var sdk = require('./sdk');
-const PORT = 8080;
+const PORT = 8081;
 const HOST = 'localhost';
 
 app.get('/api/create', function(req, res) {
@@ -41,7 +41,7 @@ app.get('/api/vote', function(req, res) {
     sdk.send(true, org, channel, chaincode, 'vote', args, res);
 });
 
-app.get('/api/getVote', function(req, res) {
+app.get('/api/query', function(req, res) {
     var title = req.query.title;
     var org = req.query.org;
     var channel = req.query.channel;
