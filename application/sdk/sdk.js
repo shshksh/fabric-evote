@@ -8,9 +8,9 @@ const { FileSystemWallet, Gateway } = require("fabric-network");
 const path = require("path");
 
 async function send(type, org, channel, chaincode, func, args, res) {
-    const ccpPath = path.resolve(__dirname, "..", `connection.json`);
+    const ccpPath = path.resolve(__dirname, "..", `connection-${org}.json`);
     try {
-        const walletPath = path.join(process.cwd(), "..", "wallet");
+        const walletPath = path.join(process.cwd(), "..", "wallet", `${org}`);
         const wallet = new FileSystemWallet(walletPath);
         const userExists = await wallet.exists("user1");
         if (!userExists) {
