@@ -54,3 +54,5 @@ peer chaincode invoke -o orderer.evote.com:7050 \
 sleep 3
 
 docker exec cli peer chaincode query -C $CHANNEL_NAME -n $CCNAME -c '{"Args":["query","test-voting"]}' 
+
+docker exec cli peer chaincode query -C $CHANNEL_NAME -n $CCNAME -c '{"Args":["query","test-voting", "total"]}' 

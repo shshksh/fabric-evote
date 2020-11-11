@@ -22,7 +22,7 @@
     "peer0.itcae.evote.com": {
       "url": "grpcs://localhost:7051",
       "tlsCACerts": {
-        "path": "../../first-network/crypto-config/peerOrganizations/itcae.evote.com/msp/tlscacerts/tlsca.itcae.evote.com-cert.pem"
+        "path": "../first-network/crypto-config/peerOrganizations/itcae.evote.com/msp/tlscacerts/tlsca.itcae.evote.com-cert.pem"
       },
       "grpcOptions": {
         "ssl-target-name-override": "peer0.itcae.evote.com",
@@ -35,7 +35,7 @@
       "url": "https://localhost:7054",
       "caName": "ca.itcae.evote.com",
       "tlsCACerts": {
-        "pem": "../../first-network/crypto-config/peerOrganizations/itcae.evote.com/ca/ca.itcae.evote.com-cert.pem"
+        "pem": "../first-network/crypto-config/peerOrganizations/itcae.evote.com/ca/ca.itcae.evote.com-cert.pem"
       },
       "httpOptions": {
         "verify": false

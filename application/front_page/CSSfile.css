@@ -1,0 +1,25 @@
+section{
+  padding:10px;
+  text-align:center;
+  margin:5px;
+}
+#image{
+  max-width:30%;
+  height: auto;
+}
+#image2{
+  max-width:65%;
+  height: auto;
+}
+#image2:hover{
+  opacity:0.6;
+}
+#popover{
+  padding-top: 100px;
+}
+#card:hover{
+  background-image:url('./pknu2.png');
+  background-repeat:no-repeat;
+  background-position: right;
+  background-size: 70%;
+}
