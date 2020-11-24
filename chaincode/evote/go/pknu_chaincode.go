@@ -29,7 +29,7 @@ type Record struct {
 
 // Vote manage data about one Vote like 2020-IT
 type Vote struct {
-	Periods    []string    `json:periods`
+	Periods    []string    `json:"periods"`
 	Candidates []Candidate `json:"candidates"`
 	Records    []Record    `json:"records"`
 }
