@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"time"
 
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 	pb "github.com/hyperledger/fabric/protos/peer"
@@ -28,6 +29,7 @@ type Record struct {
 
 // Vote manage data about one Vote like 2020-IT
 type Vote struct {
+	Periods    []string    `json:periods`
 	Candidates []Candidate `json:"candidates"`
 	Records    []Record    `json:"records"`
 }
@@ -62,20 +64,25 @@ func (t *SimpleChaincode) Invoke(APIstub shim.ChaincodeStubInterface) pb.Respons
 //	create function put empty voting object into state with given key
 //	parameter:
 //		args[0]: title of voting
+//		args[1]: open time("yyyyMMddHHmmss")
+//		args[2]: deadline("yyyyMMddHHmmss")
 func (t *SimpleChaincode) create(APIstub shim.ChaincodeStubInterface, args []string) pb.Response {
 
-	if len(args) != 1 {
+	if len(args) != 3 {
 		return shim.Error("Incorrect number of arguments. Expecting 1")
 	}
 
 	key := args[0]
 	isExist, _ := APIstub.GetState(key)
 
+	open := args[1]
+	deadline := args[2]
+
 	if isExist != nil {
 		return shim.Error("Current key is already exist.")
 	}
 
-	vote := Vote{[]Candidate{}, []Record{}}
+	vote := Vote{[]string{open, deadline}, []Candidate{}, []Record{}}
 	voteAsBytes, _ := json.Marshal(vote)
 
 	APIstub.PutState(key, voteAsBytes)
@@ -138,6 +145,11 @@ func (t *SimpleChaincode) vote(APIstub shim.ChaincodeStubInterface, args []strin
 
 	vote := Vote{}
 	json.Unmarshal(voteAsBytes, &vote)
+
+	now := time.Now().Format("20060102150405")
+	if now < vote.Periods[0] || now >= vote.Periods[1] {
+		return shim.Error("It's not a voting period.")
+	}
 
 	for _, record := range vote.Records {
 		if record.From == args[1] {
