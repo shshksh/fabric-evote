@@ -17,7 +17,7 @@ peer chaincode invoke -o orderer.evote.com:7050 \
 -n $CCNAME \
 --peerAddresses peer0.itcae.evote.com:7051 \
 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/itcae.evote.com/peers/peer0.itcae.evote.com/tls/ca.crt \
--c '{"Args":["create","test-voting"]}'
+-c '{"Args":["create","test-voting","20201124000000","20201231000000"]}'
 sleep 3
 
 docker exec cli \
