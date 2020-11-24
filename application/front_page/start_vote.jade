@@ -16,9 +16,9 @@ html(lang='en')
       nav(aria-label='breadcrumb')
         ol.breadcrumb
           li.breadcrumb-item.text-primary 로그인
-          li.breadcrumb-item.text-primary ①학과회장 투표
-          li.breadcrumb-item.text-primary ②단과대학 투표
-          li.breadcrumb-item.text-primary ③총학생회 투표
+          li.breadcrumb-item.text-primary ①학과 학생회 선거
+          li.breadcrumb-item.text-primary ②단과대학 학생회 선거
+          li.breadcrumb-item.text-primary ③총학생회 선거
     // progressbar
     section
       .progress
@@ -31,7 +31,8 @@ html(lang='en')
           br
           h4.card-title.text-primary 투표를 시작합니다.
           p.card-text 투표를 시작 하시려면 시작을 눌러주세요.
-          form(method='post' action='./vote_department')
+          //학생정보에 따라 단과대 투표페이지 연결
+          form(action=depart method='post')
             input.btn.btn-outline-primary.mr-2(type='submit' value='시작')
           br
           br

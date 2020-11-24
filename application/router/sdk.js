@@ -36,9 +36,6 @@ async function send(type, org, channel, chaincode, func, args, res) {
             await contract.submitTransaction(func, ...args);
             console.log("Transaction has been submitted");
             await gateway.disconnect();
-            console.log("here?");
-            // res.status(200).send("Transaction has been submitted");
-            console.log("here!");
             return true;
         } else {
             const result = await contract.evaluateTransaction(func, ...args);

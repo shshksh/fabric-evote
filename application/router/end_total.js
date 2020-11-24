@@ -1,8 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var router = express.Router();
-var path= require('path');
-var sdk = require('./sdk');
 
 router.use(bodyParser.json());
 
@@ -15,15 +13,14 @@ router.post('/', function(req, res){
     res.render('../front_page/end_total.jade');
     can1 = req.body.candidate1;
     can2 = req.body.candidate2;
-    console.log(can1, can2);    //선택된 후보 값은 'on', 선택되지 못하면 값이 없음
-    
+    //console.log(can1, can2);    //선택된 후보 값은 'on', 선택되지 못하면 값이 없음
     if (can1=='on'){
         console.log('후보자1에게 투표되었습니다.');
-        var to = '201811111'
+        can1 = true;
     }
     else{
         console.log('후보자2에게 투표되었습니다.');
-        var to = '201822222'
+        can2 = false;
     }
 });
 

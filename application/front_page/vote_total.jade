@@ -16,9 +16,9 @@ html(lang='en')
       nav(aria-label='breadcrumb')
         ol.breadcrumb
           li.breadcrumb-item.text-primary 로그인
-          li.breadcrumb-item.text-primary ①학과회장 투표
-          li.breadcrumb-item.text-primary ②단과대학 투표
-          li.breadcrumb-item.active(aria-current='page') ③총학생회 투표
+          li.breadcrumb-item.text-primary ①학과 학생회 선거
+          li.breadcrumb-item.text-primary ②단과대학 학생회 선거
+          li.breadcrumb-item.active(aria-current='page') ③총학생회 선거
     // progressbar
     section
       .progress
@@ -33,7 +33,7 @@ html(lang='en')
           // 후보자 선택 및 투표 버튼
           .col
             section
-              form#popover(method='post' action='./end_total')
+              form#popover(action='./end_total' method='post')
                 .btn-group.btn-group-toggle(data-toggle='buttons')
                   label.btn.btn-primary(data-toggle='popover' title='선택하신 후보자가 확실합니까?' data-content='선택하신 후보자를 다시 한번 확인해주세요.' data-placement='left' data-trigger='hover')
                     input#candidate1(type='radio' name='candidate1')

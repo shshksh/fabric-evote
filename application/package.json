@@ -2,7 +2,7 @@
   "name": "test_server",
   "version": "1.0.0",
   "description": "Hyperledger Fabric byfn Evote Application",
-  "main": "server1.js",
+  "main": "server.js",
   "scripts": {
     "start": "node server1.js",
     "backend": "nodemon server1.js",
