@@ -165,12 +165,47 @@ func (t *SimpleChaincode) vote(APIstub shim.ChaincodeStubInterface, args []strin
 //		args[0]: key
 func (t *SimpleChaincode) query(APIstub shim.ChaincodeStubInterface, args []string) pb.Response {
 
-	if len(args) != 1 {
+	switch len(args) {
+	case 1:
+		{
+			voteAsBytes, _ := APIstub.GetState(args[0])
+			return shim.Success(voteAsBytes)
+		}
+	case 2:
+		{
+			voteAsBytes, _ := APIstub.GetState(args[0])
+			target := args[1]
+
+			vote := Vote{}
+			json.Unmarshal(voteAsBytes, &vote)
+
+			total := make(map[string]int)
+
+			if target == "total" {
+				for _, cand := range vote.Candidates {
+					total[cand.SID] = 0
+				}
+
+				for _, record := range vote.Records {
+					total[record.To]++
+				}
+			} else {
+				total[target] = 0
+
+				for _, record := range vote.Records {
+					if record.To == target {
+						total[target]++
+					}
+				}
+			}
+
+			totalAsBytes, _ := json.MarshalIndent(total, "", "  ")
+
+			return shim.Success(totalAsBytes)
+		}
+	default:
 		return shim.Error("Incorrect number of arguments. Expecting 1")
 	}
-
-	voteAsBytes, _ := APIstub.GetState(args[0])
-	return shim.Success(voteAsBytes)
 }
 
 func main() {

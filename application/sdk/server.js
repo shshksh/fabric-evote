@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 var path = require('path');
-var sdk = require('./sdk');
+var sdk = require('../router/sdk');
 const PORT = 8081;
 const HOST = 'localhost';
 

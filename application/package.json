@@ -1,22 +1,42 @@
 {
-    "name": "Fabric-evote-Go",
-    "version": "1.0.0",
-    "description": "Hyperledger Fabric byfn Evote Application",
-    "main": "server.js",
-    "dependencies": {
-        "fabric-ca-client": "^1.4.4",
-        "fabric-client": "^1.4.4",
-        "fabric-network": "^1.4.4",
-        "grpc": "^1.9.1",
-        "express": "latest",
-        "body-parser": "latest",
-        "ejs": "latest"
-    },
-    "license": "Apache-2.0",
-    "keywords": [
-        "Hyperledger",
-        "Fabric",
-        "Evote",
-        "Application"
-    ]
+  "name": "test_server",
+  "version": "1.0.0",
+  "description": "Hyperledger Fabric byfn Evote Application",
+  "main": "server1.js",
+  "scripts": {
+    "start": "node server1.js",
+    "backend": "nodemon server1.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "assert": "^2.0.0",
+    "bcrypt": "^5.0.0",
+    "body-parser": "latest",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.5",
+    "ejs": "latest",
+    "express": "latest",
+    "express-mysql-session": "^2.1.4",
+    "express-session": "^1.17.1",
+    "fabric-ca-client": "^1.4.4",
+    "fabric-client": "^1.4.4",
+    "fabric-network": "^1.4.4",
+    "grpc": "^1.9.1",
+    "jade": "^1.11.0",
+    "md5": "^2.3.0",
+    "mongodb": "^3.6.2",
+    "mongoose": "^5.10.8",
+    "mongoose-auto-increment": "^5.0.1",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "pbkdf2": "^3.1.1",
+    "pbkdf2-password": "^1.2.1",
+    "salt": "^0.5.5",
+    "session-file-store": "^1.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
 }
