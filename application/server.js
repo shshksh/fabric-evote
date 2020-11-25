@@ -30,6 +30,9 @@ var end_college = require('./router/end_college');
 var vote_total = require('./router/vote_total');
 var end_total = require('./router/end_total');
 
+var select = require('./router/select');
+var result = require('./router/result');
+
 app.use('/login', login);
 app.use('/start_vote', start_vote);
 app.use('/vote_department_KOR', vote_department_KOR);
@@ -43,6 +46,8 @@ app.use('/vote_college_CE', vote_college_CE);
 app.use('/end_college', end_college);
 app.use('/vote_total', vote_total);
 app.use('/end_total', end_total);
+app.use('/result', result);
+app.use('/select', select);
 
 //server start
 app.listen(4000, function(){

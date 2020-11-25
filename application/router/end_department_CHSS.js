@@ -3,7 +3,7 @@ var bodyParser = require("body-parser");
 var router = express.Router();
 //var sdk = require('./sdk');
 var mysql = require("mysql"); //mysql 모듈 설치
-const num = require("./start_vote");
+const num = require("./select");
 
 router.use(bodyParser.json());
 
