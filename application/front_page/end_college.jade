@@ -16,9 +16,9 @@ html(lang='en')
       nav(aria-label='breadcrumb')
         ol.breadcrumb
           li.breadcrumb-item.text-primary 로그인
-          li.breadcrumb-item.text-primary ①학과회장 투표
-          li.breadcrumb-item.active(aria-current='page') ②단과대학 투표
-          li.breadcrumb-item.text-primary ③총학생회 투표
+          li.breadcrumb-item.text-primary ①학과 학생회 선거
+          li.breadcrumb-item.active(aria-current='page') ②단과대학 학생회 선거
+          li.breadcrumb-item.text-primary ③총학생회 선거
     // progressbar
     section
       .progress
@@ -29,9 +29,9 @@ html(lang='en')
         #card.card-body.d-flex.flex-column.align-items-start
           br
           br
-          h4.card-title.text-primary 공과대학 투표가 완료 되었습니다.
+          h4.card-title.text-primary 단과대학 투표가 완료 되었습니다.
           p.card-text 총학생회 투표를 하시려면 다음을 눌러주세요.
-          form(method='post' action='./vote_total')
+          form(action='./vote_total' method='post')
             input.btn.btn-outline-primary.mr-2(type='submit' value='다음')
           br
           br

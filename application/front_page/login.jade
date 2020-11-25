@@ -20,9 +20,9 @@ html(lang='en')
       nav(aria-label='breadcrumb')
         ol.breadcrumb
           li.breadcrumb-item.active(aria-current='page') 로그인
-          li.breadcrumb-item.text-primary ①학과회장 투표
-          li.breadcrumb-item.text-primary ②단과대학 투표
-          li.breadcrumb-item.text-primary ③총학생회 투표
+          li.breadcrumb-item.text-primary ①학과 학생회 선거
+          li.breadcrumb-item.text-primary ②단과대학 학생회 선거
+          li.breadcrumb-item.text-primary ③총학생회 선거
     // progressbar
     section
       .progress
@@ -31,7 +31,7 @@ html(lang='en')
     .container
       .row
         section#login.col
-          form(method='post' action='./start_vote')
+          form(method='post' action='./select')
             h1.py-2 로그인
             .form-group.row.was-validated
               label.col-lg-2.col-form-label.form-control-label.text-muted 아이디
