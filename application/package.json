@@ -2,7 +2,7 @@
   "name": "test_server",
   "version": "1.0.0",
   "description": "Hyperledger Fabric byfn Evote Application",
-  "main": "server1.js",
+  "main": "server.js",
   "scripts": {
     "start": "node server1.js",
     "backend": "nodemon server1.js",
@@ -26,6 +26,7 @@
     "grpc": "^1.9.1",
     "jade": "^1.11.0",
     "md5": "^2.3.0",
+    "moment": "^2.29.1",
     "mongodb": "^3.6.2",
     "mongoose": "^5.10.8",
     "mongoose-auto-increment": "^5.0.1",

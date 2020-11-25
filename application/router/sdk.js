@@ -9,10 +9,8 @@ const path = require("path");
 
 async function send(type, org, channel, chaincode, func, args, res) {
     const ccpPath = path.resolve(__dirname, "..", `connection-${org}.json`);
-    console.log(ccpPath);
     try {
         const walletPath = path.join(process.cwd(), "wallet", `${org}`);
-        console.log(walletPath);
         const wallet = new FileSystemWallet(walletPath);
         const userExists = await wallet.exists("user1");
         if (!userExists) {
@@ -36,9 +34,6 @@ async function send(type, org, channel, chaincode, func, args, res) {
             await contract.submitTransaction(func, ...args);
             console.log("Transaction has been submitted");
             await gateway.disconnect();
-            console.log("here?");
-            // res.status(200).send("Transaction has been submitted");
-            console.log("here!");
             return true;
         } else {
             const result = await contract.evaluateTransaction(func, ...args);
@@ -46,7 +41,7 @@ async function send(type, org, channel, chaincode, func, args, res) {
                 `Transaction has been evaluated, result is: ${result.toString()}`
             );
             // res.send(result.toString());
-            return true;
+            return `${result}`;
         }
     } catch (error) {
         console.error(`Failed to submit transaction: ${error}`);
