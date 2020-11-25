@@ -43,7 +43,37 @@ router.post("/", function (req, res) {
             <a href="/login">Login</a>
             `);
   } else {
-    res.render("../front_page/select.jade");
+    connection.query(
+      "SELECT * FROM workbench.voter WHERE studentnumber=?;",
+      [userid],
+      function (error, check, fields) {
+        if (error) {
+          console.log(error);
+        }
+        var department = check[0].department;
+
+        //유권자의 단과대에 따라 단과대투표페이지 연결
+        if (department == "IT") {
+          res.render("../front_page/select.jade", {
+            depart: "./vote_department_IT",
+          });
+        } else if (department == "COM") {
+          res.render("../front_page/select.jade", {
+            depart: "./vote_department_COM",
+          });
+        } else if (department == "KOR") {
+          res.render("../front_page/select.jade", {
+            depart: "./vote_department_KOR",
+          });
+        } else if (department == "ENG") {
+          res.render("../front_page/select.jade", {
+            depart: "./vote_department_ENG",
+          });
+        } else {
+          console.log(error);
+        }
+      }
+    );
   }
 });
 
@@ -75,10 +105,6 @@ function idpw(id, pw) {
       return false;
     }
   );
-}
-
-function timeCheck() {
-  console.log('yes');
 }
 
 module.exports = router;

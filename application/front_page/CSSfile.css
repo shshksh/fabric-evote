@@ -17,9 +17,9 @@ section{
 #popover{
   padding-top: 100px;
 }
-#card:hover{
+/* #card:hover{
   background-image:url('./pknu2.png');
   background-repeat:no-repeat;
   background-position: right;
   background-size: 70%;
-}
+} */
