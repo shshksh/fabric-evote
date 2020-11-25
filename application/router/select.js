@@ -51,6 +51,7 @@ router.post("/", function (req, res) {
           console.log(error);
         }
         var department = check[0].department;
+        module.exports.department = department;
 
         //유권자의 단과대에 따라 단과대투표페이지 연결
         if (department == "IT") {

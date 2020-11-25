@@ -10,33 +10,29 @@ router.use(bodyParser.json());
 router.post("/", async function (req, res) {
   console.log("result"); //console창 출력
   // res.render('../front_page/result.jade');
-    let time = moment().format('YYYYMMDDhhmmss');
-    console.log(`current time: ${time}`);
+  let time = moment().format("YYYYMMDDhhmmss");
+  console.log(`current time: ${time}`);
 
-    // args = ['test']
-    // data = await sdk.send(false, 'itcae', 'itchannel', 'itcc', "query", args, res);
-    // periods = JSON.parse(data).periods;
-    // _open = periods[0];
-    // _deadline = periods[1];
-    // console.log(_open, _deadline);
+  args = ["itvote"];
+  data = await sdk.send(
+    false,
+    "itcae",
+    "itchannel",
+    "itcc",
+    "query",
+    args,
+    res
+  );
+  periods = JSON.parse(data).periods;
+  _open = periods[0];
+  _deadline = periods[1];
+  console.log(_open, _deadline);
 
-    // if (time >= _open && time < _deadline) {
-    //     res.render('../front_page/result.jade');
-    // } else {
-    //     console.log('no');
-    // }
-
-    quit = await sdk.send(false, 'itcae', 'itchannel', 'itcc', "query", ['test_quit'], res);
-    periods = JSON.parse(quit).periods;
-    _open = periods[0];
-    _deadline = periods[1];
-    console.log(`open: ${_open}, deadline: ${_deadline}`);
-    
-    if (time <= _deadline) {
-        console.log('not now');
-    } else {
-        res.render('../front_page/result.jade');
-    }
+  if (time <= _deadline) {
+    console.log("not now");
+  } else {
+    res.render("../front_page/result.jade");
+  }
 });
 
 module.exports = router;

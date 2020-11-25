@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var router = express.Router();  //각 페이지는 라우터로 분리
+var sdk = require("./router/sdk");
 var app = express();
 
 app.locals.pretty = true;  //jade파일의 형식화
@@ -14,7 +15,6 @@ app.set('views', './front_page'); //디렉토리
 
 //Router
 var login = require('./router/login');
-var start_vote = require('./router/start_vote');
 //과투표 - 국어국문, 영어영문, 아이티, 컴공
 var vote_department_KOR = require('./router/vote_department_KOR');
 var vote_department_ENG = require('./router/vote_department_ENG');
@@ -34,7 +34,6 @@ var select = require('./router/select');
 var result = require('./router/result');
 
 app.use('/login', login);
-app.use('/start_vote', start_vote);
 app.use('/vote_department_KOR', vote_department_KOR);
 app.use('/vote_department_ENG', vote_department_ENG);
 app.use('/vote_department_IT', vote_department_IT);
@@ -48,6 +47,55 @@ app.use('/vote_total', vote_total);
 app.use('/end_total', end_total);
 app.use('/result', result);
 app.use('/select', select);
+
+app.get('/api/create', function(req, res) {
+  var title = req.query.title;
+  var org = req.query.org;
+  var channel = req.query.channel;
+  var chaincode = req.query.chaincode;
+  
+  var open = req.query.open;
+  var deadline = req.query.deadline;
+
+  let args = [title, open, deadline];
+  sdk.send(true, org, channel, chaincode, 'create', args, res);
+});
+
+app.get('/api/enroll', function(req, res) {
+  var title = req.query.title;
+  var name = req.query.name;
+  var major = req.query.major;
+  var sid = req.query.sid;
+  var college = req.query.college;
+  var org = req.query.org;
+  var channel = req.query.channel;
+  var chaincode = req.query.chaincode;
+
+  let args = [title, name, major, sid, college]
+  sdk.send(true, org, channel, chaincode, 'enroll', args, res)
+});
+
+app.get('/api/vote', function(req, res) {
+  var title = req.query.title;
+  var from = req.query.from;
+  var to = req.query.to;
+  var org = req.query.org;
+  var channel = req.query.channel;
+  var chaincode = req.query.chaincode;
+
+  let args = [title, from, to];
+  sdk.send(true, org, channel, chaincode, 'vote', args, res);
+});
+
+app.get('/api/query', function(req, res) {
+  var title = req.query.title;
+  var org = req.query.org;
+  var channel = req.query.channel;
+  var chaincode = req.query.chaincode;
+
+  let args = [title];
+  sdk.send(false, org, channel, chaincode, 'query', args, res);
+})
 
 //server start
 app.listen(4000, function(){
