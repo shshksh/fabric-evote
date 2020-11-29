@@ -35,8 +35,8 @@ html(lang='en')
               h3 투표 시작
         .col
           // result.html로 넘어감 / 아직 result 페이지는 안 만들었음
-          form(action='./result' method='post')
-            button.btn.btn-outline-info.btn-block.mr-2(type='submit' style='height: 100px;' data-toggle='modal' data-target='#result')
+          form(action='./result' method='post' id='myFrm')
+            button.btn.btn-outline-info.btn-block.mr-2(type='button' style='height: 100px;' id='myBtn')
               h3 투표 결과확인
             #result.modal.fade(tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true')
               .modal-dialog.modal-lg
@@ -49,11 +49,11 @@ html(lang='en')
                   .modal-body
                     | 아직 투표기간이 종료되지 않았습니다.
                     br
-                    |                        투표결과 확인은 2020년 12월 1일 오전 10시 이후 확인 가능합니다.
+                    | 투표결과 확인은 #{time} 이후 확인 가능합니다.
                   .modal-footer
                     button.btn.btn-info(type='button' data-dismiss='modal') 닫기
           br
-          h5 투표결과 확인은 2020년 12월 1일 오전 10시이후 확인 가능합니다.
+          h5 투표결과 확인은 #{time} 이후 확인 가능합니다.
     // Optional JavaScript
     // jQuery first, then Popper.js, then Bootstrap JS
     script(src='https://code.jquery.com/jquery-3.2.1.slim.min.js' integrity='sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN' crossorigin='anonymous')
@@ -68,4 +68,20 @@ html(lang='en')
       return '<img class="img-fluid" src="'+$(this).data('img') + '" />';
       }
       })
+      });
+    script.
+      $(document).ready(function(){
+      $("#myBtn").click(function(){
+      date = new Date()
+      year = date.getFullYear()
+      month = date.getMonth() + 1
+      day = date.getDate()
+      hour = date.getHours()
+      curr = `${year}년 ${month}월 ${day}일 ${hour}시`
+      if (curr <= "#{time}") {
+      $("#result").modal();
+      } else {
+      document.getElementById('myFrm').submit();
+      }
+      });
       });

@@ -2,6 +2,7 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var router = express.Router();
 var mysql = require("mysql");
+var sdk = require("./sdk");
 
 router.use(bodyParser.json());
 
@@ -26,7 +27,7 @@ var connection = mysql.createConnection({
 // });
 
 //투표 시작 화면 출력
-router.post("/", function (req, res) {
+router.post("/", async function (req, res) {
   console.log("select"); //console창 출력
 
   userid = req.body.id;
@@ -35,6 +36,25 @@ router.post("/", function (req, res) {
   module.exports.uid = userid;
 
   let result = idpw(userid, userpw);
+
+  data = await sdk.send(
+    false,
+    "itcae",
+    "itchannel",
+    "itcc",
+    "query",
+    ["itvote"],
+    res
+  );
+  periods = JSON.parse(data).periods;
+  _deadline = periods[1];
+
+  module.exports.deadline = _deadline
+
+  year = _deadline.substr(0, 4);
+  month = _deadline.substr(4, 2);
+  day = _deadline.substr(6, 2);
+  hour = _deadline.substr(8, 2);
 
   if (result === false) {
     //유권자가 아님을 나타내는 문구와 로그인페이지로 돌아가는 링크 제시
@@ -57,18 +77,22 @@ router.post("/", function (req, res) {
         if (department == "IT") {
           res.render("../front_page/select.jade", {
             depart: "./vote_department_IT",
+            time: `${year}년 ${month}월 ${day}일 ${hour}시`
           });
         } else if (department == "COM") {
           res.render("../front_page/select.jade", {
             depart: "./vote_department_COM",
+            time: `${year}년 ${month}월 ${day}일 ${hour}시`
           });
         } else if (department == "KOR") {
           res.render("../front_page/select.jade", {
             depart: "./vote_department_KOR",
+            time: `${year}년 ${month}월 ${day}일 ${hour}시`
           });
         } else if (department == "ENG") {
           res.render("../front_page/select.jade", {
             depart: "./vote_department_ENG",
+            time: `${year}년 ${month}월 ${day}일 ${hour}시`
           });
         } else {
           console.log(error);

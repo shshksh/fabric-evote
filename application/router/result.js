@@ -2,7 +2,7 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var router = express.Router();
 var moment = require("moment");
-var sdk = require("./sdk");
+const num = require("./select");
 
 router.use(bodyParser.json());
 
@@ -13,25 +13,12 @@ router.post("/", async function (req, res) {
   let time = moment().format("YYYYMMDDhhmmss");
   console.log(`current time: ${time}`);
 
-  args = ["itvote"];
-  data = await sdk.send(
-    false,
-    "itcae",
-    "itchannel",
-    "itcc",
-    "query",
-    args,
-    res
-  );
-  periods = JSON.parse(data).periods;
-  _open = periods[0];
-  _deadline = periods[1];
-  console.log(_open, _deadline);
+  deadline = num.deadline
 
-  if (time <= _deadline) {
-    console.log("not now");
-  } else {
+  if (time <= num.deadline) {
     res.render("../front_page/result.jade");
+  } else {
+    console.log('not now')
   }
 });
 
