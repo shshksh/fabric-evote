@@ -32,8 +32,8 @@ router.post("/", async function (req, res) {
     [`${info.department}` + "vote"],
     res
   );
-  depart_info_data = JSON.parse(depart_data).candidates;
-  
+  depart_info_data = JSON.parse(depart_info).candidates;
+
   college_data = await sdk.send(
     false,
     `${info.department}`,
@@ -44,6 +44,17 @@ router.post("/", async function (req, res) {
     res
   );
   college_results = JSON.parse(college_data).results;
+
+  college_info = await sdk.send(
+    false,
+    `${info.department}`,
+    `${info.college}` + "channel",
+    `${info.college}` + "cc",
+    "query",
+    [`${info.college}` + "vote"],
+    res
+  );
+  college_info_data = JSON.parse(college_info).candidates;
 
   total_data = await sdk.send(
     false,
@@ -56,26 +67,65 @@ router.post("/", async function (req, res) {
   );
   total_results = JSON.parse(total_data).results;
 
-  //유권자가 컴공일 경우, 후보자들 학번(from 백앤드), 전체 표 수
-  let images = {
-    dw: depart_results[0].sid + ".jpg",
-    cw: college_results[0].sid + ".jpg",
-    tw: total_results[0].sid + ".jpg",
-  };
+  total_info = await sdk.send(
+    false,
+    `${info.department}`,
+    "collegechannel",
+    "collegecc",
+    "query",
+    ["collegevote"],
+    res
+  );
+  total_info_data = JSON.parse(total_info).candidates;
 
-  let datas = {
+  //후보자 번호 확인 함수
+  function num_ary(winner) {
+    if (winner % 2 == 0) return 2;
+    else return 1;
+  }
+  //투표결과를 통한 당선자 선정
+  function win(d1, d2) {
+    if (d1 > d2) return 0;
+    else return 1;
+  }
+  //당선자 학번
+  var dewin =
+    depart_info_data[win(depart_results[0].votes, depart_results[1].votes)].sid;
+  var cowin =
+    college_info_data[win(college_results[0].votes, college_results[1].votes)]
+      .sid;
+  var towin =
+    total_info_data[win(total_results[0].votes, total_results[1].votes)].sid;
+
+  let devote = {
+    dw: dewin + ".jpg",
+    num: num_ary(dewin),
     de1data: depart_results[0].votes,
     de2data: depart_results[1].votes,
+    winner: depart_info_data[(num_ary(dewin) + 1) % 2].name,
+    de1name: depart_info_data[0].name,
+    de2name: depart_info_data[1].name,
+  };
+  let colvote = {
+    cw: cowin + ".jpg",
+    num: num_ary(cowin),
     co1data: college_results[0].votes,
     co2data: college_results[1].votes,
+    winner: college_info_data[(num_ary(dewin) + 1) % 2].name,
+    de1name: college_info_data[0].name,
+    de2name: college_info_data[1].name,
+  };
+  let tovote = {
+    tw: towin + ".jpg",
+    num: num_ary(towin),
     to1data: total_results[0].votes,
-    to2data: total_results[1].votes
-  }
+    to2data: total_results[1].votes,
+    winner: total_info_data[(num_ary(dewin) + 1) % 2].name,
+    de1name: total_info_data[0].name,
+    de2name: total_info_data[1].name,
+  };
 
-  res.render("../front_page/result.jade", {
-    images,
-    datas,
-  });
+  res.render("../front_page/result.jade", { devote, colvote, tovote });
 });
 
 module.exports = router;

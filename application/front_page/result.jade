@@ -28,9 +28,9 @@ html(lang='en')
             canvas#Chart_department
             br
             br
-            h4#text.card-title.text-primary 후보 2번 정다빈 님이 당선되었습니다.
+            p 후보 #{devote.num}번 #{devote.winner} 님이 당선되었습니다.
           .col
-            img#image3(src=images.dw)
+            img#image3(src=devote.dw)
       br
       br
       // 단과대투표 결과 그래프
@@ -41,9 +41,9 @@ html(lang='en')
             canvas#Chart_college
             br
             br
-            h4#text.card-title.text-primary 후보 1번 김채은 님이 당선되었습니다.
+            p 후보 #{colvote.num}번 #{colvote.winner} 님이 당선되었습니다.
           .col
-            img#image3(src=images.cw)
+            img#image3(src=colvote.cw)
       br
       br
       // 총학투표 결과 그래프
@@ -54,18 +54,18 @@ html(lang='en')
             canvas#Chart_total
             br
             br
-            h4#text.card-title.text-primary 후보 2번 이종석 님이 당선되었습니다.
+            p 후보 #{tovote.num}번 #{tovote.winner} 님이 당선되었습니다.
           .col
-            img#image3(src=images.tw)
+            img#image3(src=tovote.tw)
     script.
       // 학과 막대그래프
       var ctx1 = document.getElementById('Chart_department');
       var myChart1 = new Chart(ctx1, {
       type: 'bar',
-      data: { labels: ['후보 1번 김설현', '후보 2번 정다빈'], //라벨(후보자) 이름
+      data: { labels: ['후보 1번 #{devote.de1name}', '후보 2번 #{devote.de2name}'], //라벨(후보자) 이름
       datasets: [{
       label: '투표 수',
-      data: ["#{datas.de1data}", "#{datas.de2data}"],
+      data: [#{devote.de1data}, #{devote.de2data}],
       backgroundColor: [ //막대그래프 배경
       'rgba(255, 99, 132, 0.2)',
       'rgba(54, 162, 235, 0.2)',
@@ -90,10 +90,10 @@ html(lang='en')
       var ctx2 = document.getElementById('Chart_college');
       var myChart2 = new Chart(ctx2, {
       type: 'bar',
-      data: { labels: ['후보 1번 김채은', '후보 2번 김현순'], //라벨(후보자) 이름
+      data: { labels: ['후보 1번 #{colvote.co1name}', '후보 2번 #{colvote.co2name}'], //라벨(후보자) 이름
       datasets: [{
       label: '투표 수',
-      data: ["#{datas.co1data}", "#{datas.co2data}"],
+      data: [#{colvote.co1data}, #{colvote.co2data}],
       backgroundColor: [ //막대그래프 배경
       'rgba(153, 102, 255, 0.2)',
       'rgba(255, 159, 64, 0.2)'
@@ -118,10 +118,10 @@ html(lang='en')
       var ctx3 = document.getElementById('Chart_total');
       var myChart3 = new Chart(ctx3, {
       type: 'bar',
-      data: { labels: ['후보 1번 임현주', '후보 2번 이종석'], //라벨(후보자) 이름
+      data: { labels: ['후보 1번 #{tovote.to1name}', '후보 2번 #{tovote.to2name}'], //라벨(후보자) 이름
       datasets: [{
       label: '투표 수',
-      data: ["#{datas.to1data}", "#{datas.to2data}"],
+      data: [#{tovote.to1data}, #{tovote.to2data}],
       backgroundColor: [ //막대그래프 배경색
       'rgba(255, 206, 86, 0.2)',
       'rgba(75, 192, 192, 0.2)'
