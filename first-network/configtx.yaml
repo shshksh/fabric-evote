@@ -213,7 +213,7 @@ Profiles:
                     - *OrgKOR
                     - *OrgENG
 
-    ITChannel:
+    ITCAEChannel:
         Consortium: SampleConsortium
         <<: *ChannelDefaults
         Application:

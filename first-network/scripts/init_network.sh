@@ -25,8 +25,8 @@ function udpateAnchorPeer() {
 }
 
 # create department channel and update anchor peer
-createChannelTx itchannel ITChannel itchannel.tx
-udpateAnchorPeer ITChannel OrgITMSPanchors.tx OrgITMSP
+createChannelTx itcaechannel ITCAEChannel itcaechannel.tx
+udpateAnchorPeer ITCAEChannel OrgITMSPanchors.tx OrgITMSP
 
 createChannelTx cechannel CEChannel cechannel.tx
 udpateAnchorPeer CEChannel OrgCEMSPanchors.tx OrgCEMSP

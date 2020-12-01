@@ -34,6 +34,15 @@ type Vote struct {
 	Records    []Record    `json:"records"`
 }
 
+type Results struct {
+	Results []Result `json:"results"`
+}
+
+type Result struct {
+	SID   string `json:"sid"`
+	Votes int    `json:"votes"`
+}
+
 /*
 Init method is called when the Smart Contract "pknu_chaincode" is instantiated by the blockchain network
 Best practice is to have any Ledger initialization in separate function -- see initLedger()
@@ -192,6 +201,7 @@ func (t *SimpleChaincode) query(APIstub shim.ChaincodeStubInterface, args []stri
 			json.Unmarshal(voteAsBytes, &vote)
 
 			total := make(map[string]int)
+			results := Results{[]Result{}}
 
 			if target == "total" {
 				for _, cand := range vote.Candidates {
@@ -201,17 +211,13 @@ func (t *SimpleChaincode) query(APIstub shim.ChaincodeStubInterface, args []stri
 				for _, record := range vote.Records {
 					total[record.To]++
 				}
-			} else {
-				total[target] = 0
 
-				for _, record := range vote.Records {
-					if record.To == target {
-						total[target]++
-					}
+				for _, cand := range vote.Candidates {
+					results.Results = append(results.Results, Result{SID: cand.SID, Votes: total[cand.SID]})
 				}
 			}
 
-			totalAsBytes, _ := json.MarshalIndent(total, "", "  ")
+			totalAsBytes, _ := json.MarshalIndent(results, "", "  ")
 
 			return shim.Success(totalAsBytes)
 		}

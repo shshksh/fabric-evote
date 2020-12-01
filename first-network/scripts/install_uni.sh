@@ -80,27 +80,27 @@ function instantiateChaincode() {
 }
 
 echo "start channel creating process"
-createChannel itchannel itcae
+createChannel itcaechannel itcae
 createChannel cechannel ce
 
 # join to channel
 sleep 5
 echo "start join to channel"
-joinTo itchannel itcae
+joinTo itcaechannel itcae
 joinTo cechannel ce
 
 # update anchor peer
-updateAnchor itchannel itcae OrgITMSPanchors
+updateAnchor itcaechannel itcae OrgITMSPanchors
 updateAnchor cechannel ce OrgCEMSPanchors
 
 # install chaincode
 echo "start install chaincode"
-installChaincode itchannel itcae itcc
+installChaincode itcaechannel itcae itcaecc
 installChaincode cechannel ce cecc
 
 # instantiate
 echo "start chaincode instantiate"
-instantiateChaincode itchannel itcae itcc "OR ('OrgITMSP.peer')"
+instantiateChaincode itcaechannel itcae itcaecc "OR ('OrgITMSP.peer')"
 instantiateChaincode cechannel ce cecc "OR ('OrgCEMSP.peer')"
 
 echo "end"

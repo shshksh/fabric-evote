@@ -80,7 +80,7 @@ function instantiateChaincode() {
 }
 
 echo "start channel creating process"
-createChannel itchannel itcae
+createChannel itcaechannel itcae
 createChannel cechannel ce
 createChannel korchannel kor
 createChannel engchannel eng
@@ -93,7 +93,7 @@ createChannel collegechannel itcae
 # join to channel
 sleep 3
 echo "start join to channel"
-joinTo itchannel itcae
+joinTo itcaechannel itcae
 joinTo cechannel ce
 joinTo korchannel kor
 joinTo engchannel eng
@@ -110,7 +110,7 @@ joinTo collegechannel eng
 
 # update anchor peer
 echo "start update anchor peer"
-updateAnchor itchannel itcae OrgITMSPanchors
+updateAnchor itcaechannel itcae OrgITMSPanchors
 updateAnchor cechannel ce OrgCEMSPanchors
 updateAnchor korchannel kor OrgKORMSPanchors
 updateAnchor engchannel eng OrgENGMSPanchors
@@ -127,7 +127,7 @@ updateAnchor collegechannel eng CollegeENGMSPanchors
 
 # install chaincode
 echo "start install chaincode"
-installChaincode itchannel itcae itcc
+installChaincode itcaechannel itcae itcaecc
 installChaincode cechannel ce cecc
 installChaincode korchannel kor korcc
 installChaincode engchannel eng engcc
@@ -144,7 +144,7 @@ installChaincode collegechannel eng collegecc
 
 # instantiate
 echo "start chaincode instantiate"
-instantiateChaincode itchannel itcae itcc "OR ('OrgITMSP.peer')"
+instantiateChaincode itcaechannel itcae itcaecc "OR ('OrgITMSP.peer')"
 instantiateChaincode cechannel ce cecc "OR ('OrgCEMSP.peer')"
 instantiateChaincode korchannel kor korcc "OR ('OrgKORMSP.peer')"
 instantiateChaincode engchannel eng engcc "OR ('OrgENGMSP.peer')"

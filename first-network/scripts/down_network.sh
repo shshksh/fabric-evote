@@ -7,5 +7,6 @@ docker rm -f $(docker ps -aq)
 docker rmi -f $(docker images dev-* -q)
 
 rm -rf channel-artifacts/*.block channel-artifacts/*.tx crypto-config
+rm -rf ../application/wallet
 
 docker ps -a

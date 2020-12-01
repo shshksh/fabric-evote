@@ -29,7 +29,7 @@ html(lang='en')
         .row
           .col
             a#image.col-sm-4(data-toggle='popover' data-title='1번 후보 공약' data-img='공과대1공약.png')
-              img#image2(src='공과대1.jpg')
+              img#image2(src='201711111.jpg')
           // 후보자 선택 및 투표 버튼
           .col
             section
@@ -37,17 +37,17 @@ html(lang='en')
                 .btn-group.btn-group-toggle(data-toggle='buttons')
                   label.btn.btn-primary(data-toggle='popover' title='선택하신 후보자가 확실합니까?' data-content='선택하신 후보자를 다시 한번 확인해주세요.' data-placement='left' data-trigger='hover')
                     input#candidate1(type='radio' name='candidate1')
-                    |  기호 1번 이제훈
+                    |  기호 2번 #{cand1}
                   label.btn.btn-primary(data-toggle='popover' title='선택하신 후보자가 확실합니까?' data-content='선택하신 후보자를 다시 한번 확인해주세요.' data-placement='right' data-trigger='hover')
                     input#candidate2(type='radio' name='candidate2')
-                    |  기호 2번 이주빈
+                    |  기호 2번 #{cand2}
                 br
                 br
                 br
                 button.btn.btn-outline-primary(type='submit') 투표 완료
           .col
             a#image.col-sm-4(data-toggle='popover' data-title='2번 후보 공약' data-img='공과대2공약.jpg')
-              img#image2(src='공과대2.jpg')
+              img#image2(src='201722222.jpg')
       h6.text-primary <이미지에 커서를 가져가면 공약을 볼 수 있습니다>
     // Optional JavaScript
     // jQuery first, then Popper.js, then Bootstrap JS

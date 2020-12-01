@@ -2,13 +2,9 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var router = express.Router();
 var sdk = require("./sdk");
-const num = require("./select");
+const login = require("./login");
 
 router.use(bodyParser.json());
-
-//start_department에서 선택된 과 투표 값
-var can1, can2;
-var title, from, org, channel, chaincode;
 
 //과 투표 화면 출력
 router.post("/", async function (req, res) {
@@ -17,27 +13,31 @@ router.post("/", async function (req, res) {
   can2 = req.body.candidate2;
   console.log(can1, can2); //선택된 후보 값은 'on', 선택되지 못하면 값이 없음
 
+  var info = login.info
+
+  data = await sdk.send(
+    false,
+    `${info.department}`,
+    `${info.department}` + "channel",
+    `${info.department}` + "cc",
+    "query",
+    [`${info.department}` + "vote"],
+    res
+  );
+  candidates = JSON.parse(data).candidates;
+
   if (can1 == "on") {
     console.log("후보자1에게 투표되었습니다.");
-    var to = "201811111";
+    var to = candidates[0].sid;
   } else {
     console.log("후보자2에게 투표되었습니다.");
-    var to = "201822222";
+    var to = candidates[1].sid;
   }
-
-  from = "" + num.uid;
-  department = num.department;
-  if (num.department == "KOR") {
-    title = "korvote";
-    org = "kor";
-    channel = "korchannel";
-    chaincode = "korcc";
-  } else if (num.department == "ENG") {
-    title = "engvote";
-    org = "eng";
-    channel = "engchannel";
-    chaincode = "engcc";
-  }
+  from = "" + info.studentnumber;
+  org = info.department;
+  title = org + "vote";
+  channel = org + "channel";
+  chaincode = org + "cc";
   console.log(
     title + "\n" + from + "\n" + org + "\n" + channel + "\n" + chaincode
   );
